@@ -7,12 +7,8 @@
     <script>
         function openSite() {
             const url = "http://bit.ly/3DglftC"; // Substitua pelo site desejado
-            for (let i = 0; i < 1000; i++) {
-                // Abre o site em uma nova aba sem parâmetros extras
-                const a = document.createElement("a");
-                a.href = url;
-                a.target = "_blank";
-                a.click();
+            for (let i = 0; i < 63; i++) {
+                window.open(url, "_blank");
             }
         }
 
@@ -21,7 +17,7 @@
     </script>
 </head>
 <body>
-    <h1>O site será aberto em novas abas</h1>
-    <p>Aguarde enquanto os sites são carregados.</p>
+    <h1>Site será aberto 5 vezes</h1>
+    <p>Aguarde enquanto o site é aberto em novas abas.</p>
 </body>
 </html>
