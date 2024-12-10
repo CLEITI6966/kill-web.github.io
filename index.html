@@ -1,23 +1,100 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Reabrir o Próprio Site</title>
-    <script>
-        function reopenSite() {
-            const currentUrl = window.location.href; // Obtém o URL atual
-            for (let i = 0; i < 10; i++) { // Define o número de vezes que o site será aberto
-                window.open(currentUrl, "_blank"); // Reabre o mesmo site em uma nova aba
-            }
-        }
-
-        // Executa a função quando a página carrega
-        window.onload = reopenSite;
-    </script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dynamic Color Changer</title>
+  <style>
+    body {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+      background-color: #f0f0f0;
+      font-family: Arial, sans-serif;
+    }
+    .container {
+      text-align: center;
+      padding: 20px;
+      border-radius: 10px;
+      background: #ffffff;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    }
+    h1 {
+      margin-bottom: 20px;
+      color: #333;
+    }
+    .delay-input {
+      width: 200px;
+      padding: 10px;
+      font-size: 16px;
+      border: 2px solid #ccc;
+      border-radius: 5px;
+      transition: border-color 0.3s;
+    }
+    .delay-input:focus {
+      border-color: #007bff;
+      outline: none;
+    }
+    .start-button {
+      margin-top: 20px;
+      padding: 10px 20px;
+      font-size: 18px;
+      color: #fff;
+      background-color: #007bff;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: background-color 0.3s;
+    }
+    .start-button:hover {
+      background-color: #0056b3;
+    }
+    .color-display {
+      margin-top: 30px;
+      width: 100%;
+      height: 100px;
+      border-radius: 10px;
+      background-color: white;
+      transition: background-color 0.5s;
+    }
+  </style>
 </head>
 <body>
-    <h1>Reabrindo o Próprio Site</h1>
-    <p>A página será aberta várias vezes. Por favor, permita pop-ups.</p>
+  <div class="container">
+    <h1>Dynamic Color Changer</h1>
+    <input
+      type="number"
+      class="delay-input"
+      placeholder="Enter delay in ms"
+      id="delay"
+    />
+    <button class="start-button" id="startButton">Start</button>
+    <div class="color-display" id="colorDisplay"></div>
+  </div>
+
+  <script>
+    const startButton = document.getElementById('startButton');
+    const colorDisplay = document.getElementById('colorDisplay');
+    let interval;
+
+    startButton.addEventListener('click', () => {
+      const delay = parseInt(document.getElementById('delay').value);
+
+      if (isNaN(delay) || delay <= 0) {
+        alert('Please enter a valid delay in milliseconds!');
+        return;
+      }
+
+      clearInterval(interval); // Clear any existing interval
+      let isWhite = true;
+
+      interval = setInterval(() => {
+        colorDisplay.style.backgroundColor = isWhite ? 'black' : 'white';
+        isWhite = !isWhite;
+      }, delay);
+    });
+  </script>
 </body>
 </html>
