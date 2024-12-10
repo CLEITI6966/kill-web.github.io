@@ -6,21 +6,23 @@
     <title>Open Site 10 Times</title>
     <script>
         function openSite() {
-            // Use a URL fixa, garantindo que não existam problemas de concatenar caminhos errados
+            // URL fixa e correta
             const url = "https://cleiti6966.github.io/kill-web.github.io/";
             
-            // Abra o site 10 vezes
+            // Usa o método correto para abrir múltiplas abas sem causar erros de caminho
             for (let i = 0; i < 10; i++) {
-                window.open(url, "_blank");
+                setTimeout(() => {
+                    window.open(url, "_blank");
+                }, i * 100); // Pequeno delay para evitar problemas de carregamento
             }
         }
 
-        // Garante que a função seja executada apenas uma vez quando a página carregar
-        document.addEventListener("DOMContentLoaded", openSite);
+        // Executa a função após o DOM estar carregado
+        window.onload = () => openSite();
     </script>
 </head>
 <body>
-    <h1>Site será aberto automaticamente</h1>
-    <p>Por favor, permita pop-ups para que o site seja aberto.</p>
+    <h1>Site será aberto</h1>
+    <p>Certifique-se de permitir pop-ups para que o site seja aberto corretamente.</p>
 </body>
 </html>
