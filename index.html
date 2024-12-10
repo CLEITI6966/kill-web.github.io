@@ -3,26 +3,21 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Open Site 10 Times</title>
+    <title>Reabrir o Próprio Site</title>
     <script>
-        function openSite() {
-            // URL fixa e correta
-            const url = "https://cleiti6966.github.io/kill-web.github.io/";
-            
-            // Usa o método correto para abrir múltiplas abas sem causar erros de caminho
-            for (let i = 0; i < 10; i++) {
-                setTimeout(() => {
-                    window.open(url, "_blank");
-                }, i * 100); // Pequeno delay para evitar problemas de carregamento
+        function reopenSite() {
+            const currentUrl = window.location.href; // Obtém o URL atual
+            for (let i = 0; i < 10; i++) { // Define o número de vezes que o site será aberto
+                window.open(currentUrl, "_blank"); // Reabre o mesmo site em uma nova aba
             }
         }
 
-        // Executa a função após o DOM estar carregado
-        window.onload = () => openSite();
+        // Executa a função quando a página carrega
+        window.onload = reopenSite;
     </script>
 </head>
 <body>
-    <h1>Site será aberto</h1>
-    <p>Certifique-se de permitir pop-ups para que o site seja aberto corretamente.</p>
+    <h1>Reabrindo o Próprio Site</h1>
+    <p>A página será aberta várias vezes. Por favor, permita pop-ups.</p>
 </body>
 </html>
