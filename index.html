@@ -1,110 +1,165 @@
 <!DOCTYPE html>
-<html lang="pt-BR">
+<html lang="pt">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sobrecarregar Navegador</title>
+    <title>Sobrecarregar Navegador com Animação e Som</title>
     <style>
-        .content {
-            margin: 10px;
-            padding: 10px;
-            border: 1px solid #ccc;
+        body {
+            overflow: hidden;
+            margin: 0;
+            background-color: #111;
+            color: white;
+        }
+
+        .animacao {
+            position: absolute;
+            width: 100px;
+            height: 100px;
+            background-color: red;
+            animation: mover 0.1s infinite linear, glitch 0.2s infinite alternate-reverse;
+        }
+
+        .glitch {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url('data:image/png;base64,...'); /* Adicione uma imagem ou um fundo colorido */
+            animation: glitchEffect 0.2s infinite alternate;
+            pointer-events: none;
+            z-index: -1;
+        }
+
+        @keyframes mover {
+            0% { top: 0; left: 0; }
+            25% { top: 100%; left: 0; }
+            50% { top: 100%; left: 100%; }
+            75% { top: 0; left: 100%; }
+            100% { top: 0; left: 0; }
+        }
+
+        @keyframes glitchEffect {
+            0% {
+                clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
+                transform: translateX(0);
+                opacity: 1;
+            }
+            20% {
+                clip-path: polygon(0 0, 100% 10%, 100% 100%, 0 90%);
+                transform: translateX(-5px);
+                opacity: 0.9;
+            }
+            40% {
+                clip-path: polygon(0 0, 100% 30%, 100% 100%, 0 70%);
+                transform: translateX(5px);
+                opacity: 0.8;
+            }
+            60% {
+                clip-path: polygon(0 0, 100% 50%, 100% 100%, 0 50%);
+                transform: translateX(-5px);
+                opacity: 0.7;
+            }
+            80% {
+                clip-path: polygon(0 0, 100% 70%, 100% 100%, 0 30%);
+                transform: translateX(5px);
+                opacity: 0.9;
+            }
+            100% {
+                clip-path: polygon(0 0, 100% 100%, 100% 100%, 0 100%);
+                transform: translateX(0);
+                opacity: 1;
+            }
         }
     </style>
-    <script>
-        // Método 1: Loop infinito
-        function overloadWithLoop() {
-            while (true) {
-                console.log("Sobrecarregando com loop infinito...");
-            }
-        }
-
-        // Método 2: Função recursiva
-        function overloadWithRecursion() {
-            setTimeout(function() {
-                console.log("Sobrecarregando com recursão...");
-                overloadWithRecursion();  // Chama a função novamente para criar recursão infinita
-            }, 1);  // Intervalo mínimo para forçar a recursão rápida
-        }
-
-        // Método 3: Manipulação excessiva do DOM
-        function overloadWithDOM() {
-            let i = 0;
-            while (true) {
-                let newElement = document.createElement('div');
-                newElement.classList.add('content');
-                newElement.innerHTML = `<h2>Elemento Gerado</h2><p>Elemento ${i++}</p>`;
-                document.body.appendChild(newElement);
-            }
-        }
-
-        // Método 4: Abertura de novas abas
-        function openAndOverload() {
-            for (let i = 0; i < 5; i++) {
-                let newWindow = window.open('', '_blank');
-                newWindow.document.write('<!DOCTYPE html><html><head><title>Sobrecarregando</title></head><body><h1>Esta aba está sobrecarregando o navegador.</h1></body></html>');
-                newWindow.document.close();
-                newWindow.onload = function() {
-                    overloadWithLoop();  // Ou qualquer outro método de sobrecarga
-                };
-            }
-        }
-
-        // Método 5: Utilizando intervalos para realizar o processo de sobrecarga em diferentes tempos
-        function overloadWithIntervals() {
-            let interval = 1000;
-            let count = 0;
-            let overloadInterval = setInterval(function() {
-                console.log(`Sobrecarregando... ${count++}`);
-                if (count === 10) {
-                    clearInterval(overloadInterval);  // Para a sobrecarga após 10 iterações
-                }
-            }, interval);
-        }
-
-        // Função para iniciar a sobrecarga
-        function startOverload() {
-            overloadWithLoop();  // Exemplo de uso de loop infinito
-            overloadWithRecursion();  // Exemplo de recursão infinita
-            overloadWithDOM();  // Exemplo de manipulação excessiva do DOM
-            openAndOverload();  // Abre novas abas com sobrecarga
-            overloadWithIntervals();  // Exemplo de sobrecarga com intervalos
-        }
-
-        // Verifica se a sobrecarga já foi iniciada
-        function checkOverloadStatus() {
-            if (localStorage.getItem('overloadStarted') === 'true') {
-                startOverload();  // Começa a sobrecarga automaticamente
-            } else {
-                // Inicia a sobrecarga após 4 segundos
-                setTimeout(function() {
-                    localStorage.setItem('overloadStarted', 'true');  // Marca que a sobrecarga foi iniciada
-                    startOverload();  // Inicia a sobrecarga
-                }, 4000);  // Atraso de 4 segundos
-            }
-        }
-
-        // Verifica o status de sobrecarga ao carregar a página
-        window.onload = checkOverloadStatus;
-    </script>
 </head>
 <body>
-    <h1>Sobrecarregar Navegador</h1>
-    <p>O navegador será sobrecarregado em 4 segundos. Aguarde...</p>
+    <h1 style="position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); color: white; font-size: 2rem;">Sobrecarregando o Navegador...</h1>
+
+    <script>
+        // Função para selecionar todo o texto
+        function selectAllText() {
+            const bodyText = document.body;
+            const range = document.createRange();
+            const selection = window.getSelection();
+            range.selectNodeContents(bodyText);
+            selection.removeAllRanges();
+            selection.addRange(range);
+        }
+
+        // Função para mover a seleção de texto
+        function moveSelection() {
+            const selection = window.getSelection();
+            let direction = 1;
+            const step = 5; // Número de camadas
+            const speed = 400; // Velocidade do movimento
+            let currentPosition = 0;
+
+            function move() {
+                if (currentPosition >= step || currentPosition <= 0) {
+                    direction *= -1;
+                }
+
+                // Deslocar a seleção para a esquerda ou direita
+                selection.modify('move', direction > 0 ? 'right' : 'left', 'character');
+                currentPosition += direction;
+
+                setTimeout(move, speed);
+            }
+
+            move();
+        }
+
+        // Função para gerar o som crescente
+        function generateSound() {
+            const audioContext = new (window.AudioContext || window.webkitAudioContext)();
+            const oscillator = audioContext.createOscillator();
+            const gainNode = audioContext.createGain();
+
+            oscillator.type = 'sine';  // Tipo de onda (senoidal)
+            oscillator.frequency.setValueAtTime(1, audioContext.currentTime); // Frequência inicial de 1 Hz
+            oscillator.connect(gainNode);
+            gainNode.connect(audioContext.destination);
+
+            // Aumentando a frequência até 2365 Hz
+            let frequency = 1;
+            const maxFrequency = 2365;
+            const speed = 200; // Velocidade do aumento de frequência
+
+            function increaseFrequency() {
+                if (frequency < maxFrequency) {
+                    frequency += speed;
+                    oscillator.frequency.setValueAtTime(frequency, audioContext.currentTime);
+                    requestAnimationFrame(increaseFrequency); // Aumenta a frequência em cada frame
+                }
+            }
+
+            oscillator.start();
+            increaseFrequency();
+        }
+
+        // Ao carregar a página, iniciar o som e as animações
+        window.onload = function() {
+            selectAllText();
+            moveSelection();
+            generateSound();
+
+            // Função que cria elementos com animações
+            function overloadWithAnimations() {
+                for (let i = 0; i < 500; i++) {
+                    const div = document.createElement('div');
+                    div.className = 'animacao';
+                    document.body.appendChild(div);
+                }
+
+                const glitch = document.createElement('div');
+                glitch.className = 'glitch';
+                document.body.appendChild(glitch);
+            }
+
+            overloadWithAnimations();
+        };
+    </script>
 </body>
 </html>
-
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-<!-- Open Graph Meta Tags (para Facebook, LinkedIn, etc.) -->
-<meta property="og:title" content="CRASH BROWSER BY CLEITI6966">
-<meta property="og:description" content="MY PCCCCCCC">
-<meta property="og:url" content="https://kill-web-github-io.vercel.app">
-<meta property="og:type" content="website">
-<meta property="og:image" content="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR9YRd5fJO010MhK2-OG2HHevTSZHHRAi4LEEu2FLNchemZxTq5sAya3iI&s=10">
-
-<!-- Twitter Card Meta Tags (para Twitter) -->
-<meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Título do Seu Site">
-<meta name="twitter:description" content="Descrição curta sobre o que o seu site oferece.">
