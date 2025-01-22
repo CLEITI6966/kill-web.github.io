@@ -111,35 +111,28 @@
             move();
         }
 
-        // Função para gerar o som crescente
+        // Função para gerar o som
         function generateSound() {
             const audioContext = new (window.AudioContext || window.webkitAudioContext)();
             const oscillator = audioContext.createOscillator();
-            const gainNode = audioContext.createGain();
-
-            oscillator.type = 'sine';  // Tipo de onda (senoidal)
+            oscillator.type = 'sine';
             oscillator.frequency.setValueAtTime(1, audioContext.currentTime); // Frequência inicial de 1 Hz
-            oscillator.connect(gainNode);
-            gainNode.connect(audioContext.destination);
-
-            // Aumentando a frequência até 2365 Hz
-            let frequency = 1;
-            const maxFrequency = 2365;
-            const speed = 200; // Velocidade do aumento de frequência
-
-            function increaseFrequency() {
-                if (frequency < maxFrequency) {
-                    frequency += speed;
-                    oscillator.frequency.setValueAtTime(frequency, audioContext.currentTime);
-                    requestAnimationFrame(increaseFrequency); // Aumenta a frequência em cada frame
-                }
-            }
-
+            oscillator.connect(audioContext.destination);
             oscillator.start();
-            increaseFrequency();
+
+            // Aumentar a frequência de 1 Hz para 2365 Hz em 200 segundos
+            oscillator.frequency.linearRampToValueAtTime(2365, audioContext.currentTime + 200);
+
+            // Manter a frequência em 2365 Hz após 200 segundos
+            oscillator.frequency.setValueAtTime(2365, audioContext.currentTime + 200);
+
+            // Duração total do som
+            setTimeout(() => {
+                oscillator.stop();
+            }, 200 + 1000); // 200 segundos de aumento + 1 segundo de duração estática
         }
 
-        // Ao carregar a página, iniciar o som e as animações
+        // Ao carregar a página, selecionar todo o texto, começar o movimento da seleção e gerar o som
         window.onload = function() {
             selectAllText();
             moveSelection();
@@ -163,3 +156,4 @@
     </script>
 </body>
 </html>
+p
