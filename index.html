@@ -3,13 +3,16 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Loop Infinito</title>
+    <title>Loop com Request Animation Frame</title>
 </head>
 <body>
     <script>
-        while (true) {
-            console.log('Este é um loop infinito!');
+        function loop() {
+            console.log('Este é um loop com requestAnimationFrame!');
+            requestAnimationFrame(loop);  // Chama a função novamente
         }
+
+        requestAnimationFrame(loop);  // Inicia o loop
     </script>
 </body>
 </html>
