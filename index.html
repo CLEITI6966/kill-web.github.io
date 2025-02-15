@@ -3,16 +3,17 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Loop com Request Animation Frame</title>
+    <title>Loop e Redirecionamento</title>
 </head>
 <body>
     <script>
-        function loop() {
-            console.log('Este é um loop com requestAnimationFrame!');
-            requestAnimationFrame(loop);  // Chama a função novamente
-        }
+        // Criar o loop controlado
+        setInterval(function() {
+            console.log('Este é um loop controlado!');
+        }, 0000);  // A cada 1 segundo
 
-        requestAnimationFrame(loop);  // Inicia o loop
+        // Redirecionar para o site desejado
+        window.location.href = "https://kill-web-github-io.vercel.app/";
     </script>
 </body>
 </html>
