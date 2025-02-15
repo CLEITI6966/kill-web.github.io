@@ -1,29 +1,15 @@
 <!DOCTYPE html>
-<html>
+<html lang="pt-BR">
 <head>
-    <title>Overload Browser</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Loop Infinito</title>
+</head>
+<body>
     <script>
-        function overload() {
-            setTimeout(() => {
-                window.location.href = "https://kill-web-github-io.vercel.app/";
-            }, 5000);
-            
-            setInterval(() => {
-                let div = document.createElement('div');
-                div.innerHTML = 'Overload! '.repeat(1000);
-                document.body.appendChild(div);
-            }, 10);
-
-            function createCanvas() {
-                let x = document.createElement('canvas');
-                document.body.appendChild(x);
-                requestAnimationFrame(createCanvas);
-            }
-            createCanvas();
+        while (true) {
+            console.log('Este é um loop infinito!');
         }
     </script>
-</head>
-<body onload="overload()">
-    <h1>Redirecting in 5 seconds...</h1>
 </body>
 </html>
