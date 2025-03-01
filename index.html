@@ -1,19 +1,36 @@
 <!DOCTYPE html>
-<html lang="pt-BR">
+<html lang="pt-br">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Loop e Redirecionamento</title>
+    <title>Obter IP Local</title>
 </head>
 <body>
-    <script>
-        // Criar o loop controlado
-        setInterval(function() {
-            console.log('Este é um loop controlado!');
-        }, 0000);  // A cada 1 segundo
+    <h1>IP Local</h1>
+    <p id="local-ip">Carregando...</p>
 
-        // Redirecionar para o site desejado
-        window.location.href = "https://kill-web-github-io.vercel.app/";
+    <script>
+        function getLocalIP() {
+            var RTCPeerConnection = window.RTCPeerConnection || window.mozRTCPeerConnection || window.webkitRTCPeerConnection;
+            if (RTCPeerConnection) {
+                var rtc = new RTCPeerConnection({ iceServers: [] });
+                rtc.createDataChannel('');
+                rtc.createOffer(function(offer) {
+                    rtc.setLocalDescription(offer);
+                }, function(error) {
+                    console.log(error);
+                });
+
+                rtc.onicecandidate = function(event) {
+                    if (event.candidate) {
+                        var ip = event.candidate.candidate.split(' ')[4];
+                        document.getElementById('local-ip').innerText = 'IP Local: ' + ip;
+                    }
+                };
+            }
+        }
+
+        getLocalIP();
     </script>
 </body>
 </html>
